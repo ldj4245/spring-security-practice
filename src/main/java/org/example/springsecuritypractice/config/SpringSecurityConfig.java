@@ -1,6 +1,8 @@
 package org.example.springsecuritypractice.config;
 
 import lombok.RequiredArgsConstructor;
+import org.example.springsecuritypractice.filter.StopwatchFilter;
+import org.example.springsecuritypractice.filter.TesterAuthenticationFilter;
 import org.example.springsecuritypractice.user.User;
 import org.example.springsecuritypractice.user.UserService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -13,6 +15,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -24,6 +28,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //stopwatch filter
+        http.addFilterBefore(
+                new StopwatchFilter(),
+                WebAsyncManagerIntegrationFilter.class
+        );
+
+        http.addFilterBefore(
+                new TesterAuthenticationFilter(this.authenticationManager()),
+                UsernamePasswordAuthenticationFilter.class
+        );
         // basic authentication
         http.httpBasic().disable(); // basic authentication filter 비활성화
         // csrf
