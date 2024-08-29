@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    // spring boot version 2.5.2
+    id 'org.springframework.boot' version '2.5.2'
+    id "io.spring.dependency-management" version "1.0.11.RELEASE"
+}
+
+group 'me.benny'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // web mvc 추가
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // 이 강의의 주제인 Security 추가
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // 웹 페이지를 쉽게 생성하기 위해 thymeleaf 추가
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    // Thymeleaf에서 SpringSecurity를 Integration
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    // lombok
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    // spring data jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // h2
+    runtimeOnly 'com.h2database:h2'
+    // starter test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // security test
+    testImplementation 'org.springframework.security:spring-security-test'
+    // junit test
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    useJUnitPlatform()
+}
